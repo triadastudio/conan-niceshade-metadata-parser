@@ -5,7 +5,7 @@ import os
 
 class NiceshadeMetadataParserConan(ConanFile):
     name = "niceshade-metadata-parser"
-    version = "1.4"
+    version = "1.5"
     license = "MIT"
     url = "https://github.com/dBagrat/conan-niceshade-metadata-parser.git"
     homepage = "https://github.com/nicebyte/niceshade"
@@ -15,6 +15,7 @@ class NiceshadeMetadataParserConan(ConanFile):
     options = {"shared": [True, False]}
     default_options = {"shared": False}
     no_copy_source = True
+    exports_sources = "patches/*"
 
     @property
     def _lib_name(self):
@@ -36,6 +37,10 @@ class NiceshadeMetadataParserConan(ConanFile):
                   url="https://github.com/nicebyte/niceshade/archive/{}.zip".format(self._source_commit),
                   pattern="*/{}/*".format(self._lib_name),
                   strip_root=True)
+        files.patch(self,
+                    patch_file=os.path.join(self.export_sources_folder, "patches", "niceshade.patch"),
+                    base_path=self._source_subfolder,
+                    strip=1)
 
     def generate(self):
         tc = cmake.CMakeToolchain(self)
