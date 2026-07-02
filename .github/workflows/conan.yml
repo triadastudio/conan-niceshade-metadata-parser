@@ -129,7 +129,7 @@ jobs:
     - name: Upload
       run: |
         source ./bin/activate
-        conan upload "ktx" -r triada -c
+        conan upload "niceshade-metadata-parser" -r triada -c
 
   ios:
     runs-on: macos-15
